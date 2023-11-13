@@ -1,0 +1,92 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="Modern 14 (generated)" id="1697892944959-1">
+        <createTable tableName="invoice">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="invoicePK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column name="created_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+            <column name="last_modified_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="customer_id" type="BIGINT"/>
+            <column name="shipment_price" type="FLOAT(53)"/>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="shipment_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Modern 14 (generated)" id="1697892944959-2">
+        <createTable tableName="invoice_line">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="invoice_linePK"/>
+            </column>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="invoice_id" type="BIGINT"/>
+            <column name="orderLine_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Modern 14 (generated)" id="1697892944959-3">
+        <createTable tableName="order_line">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="order_linePK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column name="created_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+            <column name="last_modified_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="customer_id" type="BIGINT"/>
+            <column name="product_item" type="JSONB"/>
+            <column name="quantity" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Modern 14 (generated)" id="1697892944959-4">
+        <createTable tableName="rating">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="ratingPK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column name="created_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+            <column name="last_modified_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="customer_id" type="BIGINT"/>
+            <column name="message" type="VARCHAR(255)"/>
+            <column name="rating" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_line_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Modern 14 (generated)" id="1697892944959-5">
+        <createTable tableName="shipment">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="shipmentPK"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="price" type="FLOAT(53)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Modern 14 (generated)" id="1697892944959-6">
+        <addUniqueConstraint columnNames="orderLine_id" constraintName="UC_INVOICE_LINEORDERLINE_ID_COL" tableName="invoice_line"/>
+    </changeSet>
+    <changeSet author="Modern 14 (generated)" id="1697892944959-7">
+        <addUniqueConstraint columnNames="order_line_id" constraintName="UC_RATINGORDER_LINE_ID_COL" tableName="rating"/>
+    </changeSet>
+    <changeSet author="Modern 14 (generated)" id="1697892944959-8">
+        <addForeignKeyConstraint baseColumnNames="order_line_id" baseTableName="rating" constraintName="FK1k0u3dr3pehehtdbdtfw4yr1c" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="order_line" validate="true"/>
+    </changeSet>
+    <changeSet author="Modern 14 (generated)" id="1697892944959-9">
+        <addForeignKeyConstraint baseColumnNames="invoice_id" baseTableName="invoice_line" constraintName="FKfnwks1ouvwbttl0fklxsem7ik" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="invoice" validate="true"/>
+    </changeSet>
+    <changeSet author="Modern 14 (generated)" id="1697892944959-10">
+        <addForeignKeyConstraint baseColumnNames="orderLine_id" baseTableName="invoice_line" constraintName="FKmy9g1xja4h7sp4016yh2rj9rc" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="order_line" validate="true"/>
+    </changeSet>
+    <changeSet author="Modern 14 (generated)" id="1697892944959-11">
+        <addForeignKeyConstraint baseColumnNames="shipment_id" baseTableName="invoice" constraintName="FKp0wjajquhluu15w4iuau7jx9p" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="shipment" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

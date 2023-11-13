@@ -1,0 +1,23 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="Modern 14 (generated)" id="1699378343089-1">
+        <addColumn tableName="invoice_line">
+            <column name="order_line_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Modern 14 (generated)" id="1699378343089-2">
+        <addUniqueConstraint columnNames="order_line_id" constraintName="UC_INVOICE_LINEORDER_LINE_ID_COL" tableName="invoice_line"/>
+    </changeSet>
+    <changeSet author="Modern 14 (generated)" id="1699378343089-3">
+        <addForeignKeyConstraint baseColumnNames="order_line_id" baseTableName="invoice_line" constraintName="FKepksix5gyx6daw688a1hsvop5" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="order_line" validate="true"/>
+    </changeSet>
+    <changeSet author="Modern 14 (generated)" id="1699378343089-4">
+        <dropForeignKeyConstraint baseTableName="order_line" constraintName="FKhwjwax1crj7ia0fk27p1maqu1"/>
+    </changeSet>
+    <changeSet author="Modern 14 (generated)" id="1699378343089-5">
+        <dropUniqueConstraint constraintName="uc_order_lineinvoice_line_id_col" tableName="order_line"/>
+    </changeSet>
+    <changeSet author="Modern 14 (generated)" id="1699378343089-6">
+        <dropColumn columnName="invoice_line_id" tableName="order_line"/>
+    </changeSet>
+</databaseChangeLog>
