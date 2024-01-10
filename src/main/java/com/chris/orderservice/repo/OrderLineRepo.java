@@ -13,7 +13,7 @@ public interface OrderLineRepo extends JpaRepository<OrderLine, Long> {
     @Query("""
             SELECT ol
             FROM OrderLine ol
-            WHERE ol.invoiceLine.id IN :invoiceLineIds
+            WHERE ol.order.id = :invoiceId
     """)
-    List<OrderLine> findAllByInvoiceLineId(Iterable<Long> invoiceLineIds);
+    List<OrderLine> findAllByInvoiceId(long invoiceId);
 }

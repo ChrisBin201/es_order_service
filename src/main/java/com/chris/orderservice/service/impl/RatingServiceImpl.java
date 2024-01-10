@@ -36,6 +36,8 @@ public class RatingServiceImpl implements RatingService {
         OrderLine orderLine = orderLineRepo.findById(ratingDTO.getOrderLineId())
                 .orElseThrow(() -> new CommonException(HttpStatus.BAD_REQUEST.value(), CommonErrorCode.ORDER_NOT_FOUND.getCode(), CommonErrorCode.ORDER_NOT_FOUND.getMessage()));
 
+        if(orderLine.isRated()) return null;
+
         Rating rating = new Rating();
 
         rating.setRating(ratingDTO.getRating());
@@ -44,9 +46,14 @@ public class RatingServiceImpl implements RatingService {
         rating.setCustomerId(userLogin.getId());
 
         Rating savedRating =  ratingRepo.save(rating);
+//        orderLine.setStatus(OrderLine.OrderStatus.COMPLETE);
+//        OrderLine savedOrderLine =  orderLineRepo.save(orderLine);
+//        savedRating.getOrderLine().getOrder().setOrderLines(null);
+//        savedOrderLine.getOrder().setOrderLines(null);
 
         // send message to kafka
         kafkaProducer.createRating(savedRating);
+//        kafkaProducer.updateOrderStatus(savedOrderLine);
         return savedRating;
     }
 
